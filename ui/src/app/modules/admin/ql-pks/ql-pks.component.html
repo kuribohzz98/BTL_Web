@@ -1,0 +1,155 @@
+<h3 class="text-center">Title</h3>
+
+<div *ngFor="let item of pks; index as i">
+  <div class="row">
+    <div class="col-md-10">
+        <p>{{i+1}}.<span class="text-danger">*&nbsp;&nbsp;</span>{{item.title}}</p>
+    </div>
+    <div class="col-md-2" style="text-align:right">
+        <button (click)="nameTitle(item.title)" data-toggle="modal" data-target="#add-pks" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+    </div>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">&nbsp;</th>
+        <th scope="col">1</th>
+        <th scope="col">2</th>
+        <th scope="col">3</th>
+        <th scope="col">4</th>
+        <th scope="col">5</th>
+        <th scope="col"><i class="fa fa-cogs"></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let items of item.value">
+        <td>{{items}}</td>
+        <td><input type="radio" [name]="items+' 1'" id=""></td>
+        <td><input type="radio" [name]="items+' 2'" id=""></td>
+        <td><input type="radio" [name]="items+' 3'" id=""></td>
+        <td><input type="radio" [name]="items+' 4'" id=""></td>
+        <td><input type="radio" [name]="items+' 5'" id=""></td>
+        <td>
+          <!-- <button type="button" data-toggle="modal" data-target="#edit-pks" (click)="nameDanhGia == items" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></button> -->
+          <button type="button" data-toggle="modal" data-target="#delete-pks" (click)="getValueDeletePks(item.title, items)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div style="text-align:center">
+  <button data-toggle="modal" data-target="#format-pks" class="btn btn-success">Đặt mặc định</button>
+</div>
+
+<div class="modal fade" id="format-pks" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Đặt làm mặc định</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn chắc chắn muốn đặt làm mặc định chứ?</p>
+      </div>
+      <div class="modal-footer">
+        <button (click)="datMacDinh()" type="button" class="btn btn-primary">Đồng ý</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Them danh gia -->
+<div class="modal fade" id="add-pks" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thêm đánh giá</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addValueOfTitle">
+          <div class="form-group">
+            <input type="text" name="values" formControlName="values" placeholder="Viết tiêu chí đánh giá vào đây" class="form-control" id="themdg">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button (click)="themDanhGia()" data-dismiss="modal" data-toggle="modal" data-target="#add-pks-status"  type="button" class="btn btn-primary">Đồng ý</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Trang thai Them danh gia -->
+<div class="modal fade" id="add-pks-status" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div *ngIf="success" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thêm đánh giá thành công</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+    <div *ngIf="fail" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Đánh giá đã tồn tại</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sua danh gia -->
+<!-- <div class="modal fade" id="edit-pks" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sửa đánh giá</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input [value]="nameDanhGia" [(ngModel)]="nameDanhGia">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Đồng ý</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- Xoa danh gia -->
+<div class="modal fade" id="delete-pks" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Bạn có muốn xóa đánh giá này?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button (click)="deletePks()" type="button" class="btn btn-primary" data-dismiss="modal">Có</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>

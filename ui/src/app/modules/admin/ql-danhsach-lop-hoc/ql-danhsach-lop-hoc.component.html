@@ -1,0 +1,123 @@
+<div>
+  <button (click)="showAddFile()" class="btn btn-default btn-sm"><i class="fa fa-upload"></i>Thêm lớp học</button>
+  <br>
+  <br>
+  <div class="row" *ngIf="hiddenfile">
+      <form class="col-md-10">
+          <div>
+              <label for="" class="col-form-label">File excel:
+                  <span class="text-danger">*&nbsp;&nbsp;</span>
+              </label>
+              <label for="uploadFile" class="btn btn-light btn-sm">
+                  <i class="fa fa-upload" aria-hidden="true"></i> Chọn file</label>
+              <input class="btn btn-default btn-sm" (change)="uploadTenFile()" id="uploadFile" hidden type="file" name="file" #fileExcel1>
+              <b class="ten-fileUpload">&nbsp;{{ tenFileExcel }}</b>
+          </div>
+      </form>
+      <div class="col-md-2" style="text-align:right">
+          <button class="btn btn-primary" (click)="upLoadFileExcel()">Tải lên</button>
+      </div>
+  </div>
+</div>
+
+<div class="table-responsive">
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Lớp môn học</th>
+      <th scope="col">Giảng viên</th>
+      <th scope="col"><i class="fa fa-cog"></i></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of classSurvey; index as i">
+      <td>{{item.tenmonhoc}}&nbsp;{{item.mamonhoc}}</td>
+      <td>{{item.tengiangvien}}</td>
+      <td>
+        <button (click)="getClass(i)" data-toggle="modal" data-target="#xemthongtin" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></button>
+        <button (click)="getIndexXoa(i)" data-toggle="modal" data-target="#xoaclass" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Delete -->
+<div class="modal fade" id="xoaclass" tabindex="-1" role="dialog" aria-labelledby="xoatttk" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="xoatttk">Xóa lớp môn học</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p>Bạn chắc chắn muốn xóa lớp môn học này chứ?</p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" (click)='xoaClass()' data-toggle="modal" data-target="#xoaclass-success" data-dismiss="modal" class="btn btn-primary">Đồng ý</button>
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Delete success -->
+<div class="modal fade" id="xoaclass-success" tabindex="-1" role="dialog" aria-labelledby="xoatttk" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="xoatttk">Xóa lớp môn học thành công</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- view -->
+
+<div class="modal fade" id="xemthongtin" tabindex="-1" role="dialog" aria-labelledby="xoatttk" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="xoatttk">Thông tin lớp học</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div *ngIf="viewTT" class="modal-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Mã Sinh viên</th>
+                    <th scope="col">Họ và tên</th>
+                    <th scope="col">Ngày sinh</th>
+                    <th scope="col">Khóa đào tạo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of classSurvey[indexView].dssinhvien; index as i">
+                      <th scope="row">{{i+1}}</th>
+                      <td>{{item.msv}}</td>
+                      <td>{{item.name}}</td>
+                      <td>{{item.ngaysinh}}</td>
+                      <td>{{item.khoadt}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+          </div>
+      </div>
+  </div>
+</div>

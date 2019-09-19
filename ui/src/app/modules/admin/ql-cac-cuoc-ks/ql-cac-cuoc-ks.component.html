@@ -1,0 +1,60 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Lớp môn học</th>
+        <th scope="col">Giảng viên</th>
+        <th scope="col"><i class="fa fa-cog"></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of classSurvey; index as i">
+        <td>{{item.tenmonhoc}}&nbsp;{{item.mamonhoc}}</td>
+        <td>{{item.tengiangvien}}</td>
+        <td>
+          <button (click)="getClassKs(i)" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></button>
+          <button (click)="getxoaKS(i)" data-toggle="modal" data-target="#xoaclass" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+          <button (click)="getketThucKS(i)" class="btn btn-warning btn-sm" ><i class="fa fa-stop-circle"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Delete -->
+<div class="modal fade" id="xoaclass" tabindex="-1" role="dialog" aria-labelledby="xoatttk" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="xoatttk">Xóa lớp cuộc khảo sát</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn muốn kết thúc cuộc khảo sát chứ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="xoaKS()" data-toggle="modal" data-target="#xoaclass-success" data-dismiss="modal" class="btn btn-primary">Đồng ý</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete success -->
+<div class="modal fade" id="xoaclass-success" tabindex="-1" role="dialog" aria-labelledby="xoatttk" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="xoatttk">Xóa lớp môn học thành công</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>

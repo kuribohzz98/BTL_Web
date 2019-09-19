@@ -1,0 +1,21 @@
+
+<div class="table-responsive">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Lớp môn học</th>
+        <th scope="col">Giảng viên</th>
+        <th scope="col"><i class="fa fa-cog"></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of classSurvey; index as i">
+        <td>{{item.tenmonhoc}}&nbsp;{{item.mamonhoc}}</td>
+        <td>{{item.tengiangvien}}</td>
+        <td>
+          <button [routerLink]="['../../','teacher','ket-qua-danh-gia','chi-tiet',item.mamonhoc]" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

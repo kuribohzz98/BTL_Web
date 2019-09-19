@@ -1,0 +1,19 @@
+<h3 style="text-align:center">Danh sách lớp học toàn trường</h3>
+<div class="table-responsive">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Lớp môn học</th>
+        <th scope="col">Mã môn học</th>
+        <th scope="col">Giảng viên</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of classSurvey; index as i">
+        <td>{{item.tenmonhoc}}</td>
+        <td>{{item.mamonhoc}}</td>
+        <td>{{item.tengiangvien}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

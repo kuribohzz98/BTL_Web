@@ -1,0 +1,26 @@
+<h3 style="text-align:center">Danh sách môn học cần đánh giá</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tên môn học</th>
+      <th scope="col">Mã môn học</th>
+      <th scope="col">Giảng viên</th>
+      <th scope="col">Đánh giá</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="dsMonHocDanhGia?.length > 0">
+    <tr *ngFor="let item of dsMonHocDanhGia; index as i">
+      <th scope="row">{{i+1}}</th>
+      <td>{{item.tenmonhoc}}</td>
+      <td>{{item.mamonhoc}}</td>
+      <td>{{item.tengiangvien}}</td>
+      <td><a [routerLink]="['tien-hanh-danh-gia',item.mamonhoc]"><button class="btn btn-info">Đánh giá</button></a></td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="hiddenDS">
+    <tr>
+      <td colspan="5" style="text-align:center"><b>Chưa có lớp học nào cần đánh giá</b></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,37 @@
+<div class="nav-side-menu">
+  <div class="brand">Xin chào, {{User.name}}</div>
+  <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+      <div class="menu-list">
+          <ul id="menu-content" class="menu-content collapse out">
+              <li data-toggle="collapse" data-target="#service" class="collapsed">
+                  <a routerLink="/classSurvey"><i class="fa fa-list-alt"></i>Danh sách lớp học phần</a>
+              </li>
+              <li *ngIf="teacher" data-toggle="collapse" data-target="#teacher" class="collapsed">
+                <a ><i class="fa fa-leanpub"></i>Giảng viên<span class="arrow"></span></a>
+              </li>
+              <ul *ngIf="teacher" class="sub-menu collapse" id="teacher">
+                <li><a routerLink="/teacher/lop-giang-day">Lớp giảng dạy</a></li>
+                <li><a routerLink="/teacher/ket-qua-danh-gia">Kết quả đánh giá lớp học</a></li>
+              </ul>
+              <li *ngIf="student" data-toggle="collapse" data-target="#products" class="collapsed">
+                <a><i class="fa fa-graduation-cap"></i>Sinh viên<span class="arrow"></span></a>
+              </li>
+              <ul *ngIf="student" class="sub-menu collapse" id="products">
+                  <li><a routerLink="/student/my-class">Các khóa học của tôi</a></li>
+                  <li><a routerLink="/student/danh-gia-mon-hoc">Đánh giá môn học</a></li>
+              </ul>
+              <li *ngIf="admin" data-toggle="collapse" data-target="#new" class="collapsed">
+                <a><i class="fa fa-unlock-alt"></i>Quản trị viên<span class="arrow"></span></a>
+              </li>
+              <ul *ngIf="admin" class="sub-menu collapse" id="new">
+                <li><a routerLink="/admin/ql-tk-sinhvien">Quản lý tài khoản sinh viên</a></li>
+                <li><a routerLink="/admin/ql-tk-giangvien">Quản lý tài khoản giảng viên</a></li>
+                <li><a routerLink="/admin/ql-danhsach-lop-hoc">Quản lý danh sách lớp học</a></li>
+                <li><a routerLink="/admin/ql-pks">Quản lý phiếu khảo sát</a></li>
+                <li><a routerLink="/admin/ql-cac-cuoc-ks">Quản lý các cuộc khảo sát</a></li>
+                <li><a routerLink="/admin/xem-kq-ks">Xem kết quả khảo sát</a></li>
+              </ul>
+               <li><a routerLink="/login"><i class="fa fa-chevron-circle-left"></i> Đăng xuất</a></li>
+          </ul>
+   </div>
+</div>

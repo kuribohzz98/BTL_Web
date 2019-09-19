@@ -1,0 +1,27 @@
+<button (click)="backClicked()" class="btn btn-outline-danger">&lsaquo;&lsaquo; Quay lại</button>
+<h3 class="text-center">Kết quả đánh giá lớp học phần <strong>{{mamonhoc}}</strong></h3>
+
+<table class="table table-hover table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Tiêu chí</th>
+      <th scope="col">M</th>
+      <th scope="col">STD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let items of playerName; index as i">
+      <th scope="row">{{i+1}}</th>
+      <td>{{items}}</td>
+      <td>{{tbc[i] | sqrt}}</td>
+      <td>{{phuongsai[i] | sqrt}}</td>
+    </tr>
+  </tbody>
+</table>
+<div>
+  <ul>Ghi chú
+    <li><strong>M:</strong> GIá trị trung bình của các tiêu chú theo lớp học phần</li>
+    <li><strong>STD:</strong> Độ lệch chuẩn của các tiêu chí theo lớp học phần</li>
+  </ul>
+</div>

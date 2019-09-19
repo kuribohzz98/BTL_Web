@@ -1,0 +1,19 @@
+<h3 style="text-align:center">Danh sách lớp học của tôi</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tên môn học</th>
+      <th scope="col">Mã môn học</th>
+      <th scope="col">Giảng viên</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of allMyClass; index as i">
+      <th scope="row">{{i+1}}</th>
+      <td>{{item.tenmonhoc}}</td>
+      <td>{{item.mamonhoc}}</td>
+      <td>{{item.tengiangvien}}</td>
+    </tr>
+  </tbody>
+</table>

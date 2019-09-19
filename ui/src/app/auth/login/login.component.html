@@ -1,0 +1,52 @@
+<div *ngIf="loginFail" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div style="text-align:center"><strong>Tên tài khoản </strong>hoặc <strong>mật khẩu </strong>không đúng</div>
+    <button (click)="hiddenloginFail()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="container">
+  <div class="card card-container">
+      <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+      <p id="profile-name" class="profile-name-card"></p>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-signin">
+          <span id="username" class="reauth"></span>
+          <div class="form-group">
+            <label for="inputUsername">Username</label>
+            <input type="text" id="inputUsername" formControlName="username"  class="form-control" placeholder="username" autofocus>
+            <div *ngIf="submitted && f.username.errors" class="alert alert-danger" role="alert">
+                <div *ngIf="f.username.errors.required">Bạn chưa nhập username</div>
+            </div>
+          </div>
+          <div class="formgroup">
+              <label for="inputPassword">Password</label>
+              <input type="password" id="inputPassword" formControlName="password" class="form-control" placeholder="password">
+              <div *ngIf="submitted && f.password.errors" class="alert alert-danger" role="alert">
+                  <div *ngIf="f.password.errors.required">Bạn chưa nhập password</div>
+                  <div *ngIf="f.password.errors.minlength">Password ít nhất 6 ký tự</div>
+              </div>
+          </div>
+          <div id="remember" class="checkbox">
+              <label>
+                  <input type="checkbox" value="remember-me"> Remember me
+              </label>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block btn-signin" >Login</button>
+      </form>
+    </div>
+</div>
+
+<div class="modal fade" id="add-account-status" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Tên tài khoản hoặc mật khẩu không đúng</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+</div>

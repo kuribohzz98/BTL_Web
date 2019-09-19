@@ -1,0 +1,286 @@
+<div>
+    <button data-toggle="modal" data-target="#themtk" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i>Thêm tài khoản</button>
+    <span>&nbsp;&nbsp;</span>
+    <button (click)="showAddFile()" class="btn btn-default btn-sm"><i class="fa fa-upload"></i>Thêm file excel</button>
+    <br>
+    <br>
+    <div class="row" *ngIf="hiddenfile">
+        <form class="col-md-10">
+            <div>
+                <label for="" class="col-form-label">File excel:
+                    <span class="text-danger">*&nbsp;&nbsp;</span>
+                </label>
+                <label for="uploadFile" class="btn btn-light btn-sm">
+                    <i class="fa fa-upload" aria-hidden="true"></i> Chọn file</label>
+                <input class="btn btn-default btn-sm" (change)="uploadTenFile()" id="uploadFile" hidden type="file" name="file" #fileExcel1>
+                <b class="ten-fileUpload">&nbsp;{{ tenFileExcel }}</b>
+            </div>
+        </form>
+        <div class="col-md-2" style="text-align:right">
+            <button class="btn btn-primary" (click)="upLoadFileExcel()">Tải lên</button>
+        </div>
+    </div>
+</div>
+<br>
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Họ và Tên</th>
+      <th scope="col">Tên đăng nhập</th>
+      <th scope="col"><i class="fa fa-cog"></i></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of account; index as i">
+      <th scope="row">{{i+1}}</th>
+      <td>{{item.name}}</td>
+      <td>{{item.username}}</td>
+      <td>
+          <div class="btn-group btn-group-sm"  role="group" aria-label="Basic example">
+              <button data-toggle="modal" (click)="getTT(i)" data-target="#xemthongtin" type="button" class="btn btn-info"><i class="fa fa-eye"></i></button>
+              <button data-toggle="modal" (click)="getTTedit(i)" data-target="#suathongtin" type="button" class="btn btn-success"><i class="fa fa-edit"></i></button>
+              <button data-toggle="modal" (click)="getTTdelete(i)" data-target="#xoatk" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+          </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Xem -->
+<div class="modal fade" id="xemthongtin" tabindex="-1" role="dialog" aria-labelledby="xtttk" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="xtttk">Thông tin tài khoản</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div *ngIf="hienlentt" class="modal-body">
+              <p><b>Họ và Tên:</b>&nbsp;{{account[view].name}}</p>
+              <p><b>Vnu email:</b>&nbsp;{{account[view].vnuemail}}</p>
+              <p><b>Username:</b>&nbsp;{{account[view].username}}</p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- edit -->
+<div class="modal fade" id="suathongtin" tabindex="-1" role="dialog" aria-labelledby="stttk" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="stttk">Sửa thông tin tài khoản</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div *ngIf="hienlenedit" class="modal-body">
+              <form [formGroup]="formEdit" class="form-group">
+                  <div>
+                      <label for="hoten">Họ và tên</label>
+                      <input type="text" formControlName="editName" [value]="account[edit].name" id="hoten" class="form-control">
+                      <div *ngIf="editstatus && g.editName.errors ">
+                        <div *ngIf="g.editName.errors.required" class="alert alert-danger" role="alert">Bạn chưa nhập họ tên</div>
+                      </div>
+                  </div>
+                  <div>
+                      <label for="mail">Vnu email</label>
+                      <input type="email" formControlName="editVnuEmail" [value]="account[edit].vnuemail" id="mail" class="form-control">
+                      <div *ngIf="editstatus && g.editVnuEmail.errors ">
+                        <div *ngIf="g.editVnuEmail.errors.required" class="alert alert-danger" role="alert">Bạn chưa nhập Vnu Email</div>
+                        <div *ngIf="g.editVnuEmail.errors.email" class="alert alert-danger" role="alert">Vnu Email Không đúng định dạng</div>
+                      </div>
+                  </div>
+                  <div>
+                      <label for="username">Tên đăng nhập</label>
+                      <input type="text" formControlName="editUserName" [value]="account[edit].username" id="username" class="form-control">
+                      <div *ngIf="editstatus && g.editUserName.errors ">
+                        <div *ngIf="g.editUserName.errors.required" class="alert alert-danger" role="alert">Bạn chưa nhập tên tài khoản</div>
+                      </div>
+                  </div>
+                  <div>
+                      <label for="password">Mật khẩu</label>
+                      <input type="password" formControlName="editPassWord" id="password" class="form-control">
+                      <div *ngIf="editstatus && g.editPassWord.errors ">
+                        <div *ngIf="g.editPassWord.errors.required" class="alert alert-danger" role="alert">Bạn chưa nhập mật khẩu</div>
+                        <div *ngIf="g.editPassWord.errors.minlength" class="alert alert-danger" role="alert">Mật khẩu ít nhất 6 ký tự</div>
+                      </div>
+                  </div>
+                  <div>
+                      <label for="repassword">Nhập lại mật khẩu</label>
+                      <input type="password" formControlName="editrePassWord" id="repassword" class="form-control">
+                      <div *ngIf="editstatus && g.editrePassWord.errors ">
+                        <div *ngIf="g.editrePassWord.errors.required" class="alert alert-danger" role="alert">Bạn chưa nhập mật khẩu</div>
+                        <div *ngIf="g.editrePassWord.errors.minlength" class="alert alert-danger" role="alert">Mật khẩu ít nhất 6 ký tự</div>
+                        <div *ngIf="g.editrePassWord.errors.ConfirmPassword" class="alert alert-danger" role="alert">Mật khẩu nhập lại không đúng</div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+                <button type="button" [attr.data-toggle]="!formEdit.invalid? 'modal': ''" [attr.data-target]="!formEdit.invalid? '#edit-account-status': ''" (click)="editAccount()" class="btn btn-primary">Đồng ý</button>    
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Delete -->
+<div class="modal fade" id="xoatk" tabindex="-1" role="dialog" aria-labelledby="xoatttk" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="xoatttk">Xóa tài khoản</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xóa tài khoản này chứ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="xoaTk()" data-toggle="modal" data-target="#xoatk-success" data-dismiss="modal" class="btn btn-primary">Đồng ý</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- delete success -->
+<div class="modal fade" id="xoatk-success" tabindex="-1" role="dialog" aria-labelledby="xoatttk" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="xoatttk">Xóa tài khoản thành công</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- add -->
+<div class="modal fade" id="themtk" tabindex="-1" role="dialog" aria-labelledby="ttk" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="ttk">Thêm tài khoản</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form [formGroup]="addAccount" class="form-group">
+                  <div>
+                      <label for="1hoten">Họ và tên</label>
+                      <input type="text" formControlName="addName" id="1hoten" class="form-control">
+                      <div *ngIf="addstatus && f.addName.errors ">
+                        <div *ngIf="f.addName.errors.required" class="alert alert-danger" role="alert">Bạn chưa nhập họ tên</div>
+                      </div>
+                  </div>
+                  <div>
+                      <label for="1mail">Vnu email</label>
+                      <input type="email" formControlName="addVnuEmail" id="1mail" class="form-control">
+                      <div *ngIf="addstatus && f.addVnuEmail.errors ">
+                        <div *ngIf="f.addVnuEmail.errors.required" class="alert alert-danger" role="alert">Bạn chưa nhập Vnu Email</div>
+                        <div *ngIf="f.addVnuEmail.errors.email" class="alert alert-danger" role="alert">Vnu Email Không đúng định dạng</div>
+                      </div>
+                  </div>
+                  <div>
+                      <label for="1username">Tên đăng nhập</label>
+                      <input type="text" formControlName="addUserName" id="1username" class="form-control">
+                      <div *ngIf="addstatus && f.addUserName.errors ">
+                        <div *ngIf="f.addUserName.errors.required" class="alert alert-danger" role="alert">Bạn chưa nhập tên tài khoản</div>
+                      </div>
+                  </div>
+                  <div>
+                      <label for="1password">Mật Khẩu</label>
+                      <input type="password" formControlName="addPassWord" id="1password" class="form-control">
+                      <div *ngIf="addstatus && f.addPassWord.errors ">
+                        <div *ngIf="f.addPassWord.errors.required" class="alert alert-danger" role="alert">Bạn chưa nhập mật khẩu</div>
+                        <div *ngIf="f.addPassWord.errors.minlength" class="alert alert-danger" role="alert">Mật khẩu ít nhất 6 ký tự</div>
+                      </div>
+                  </div>
+                  <div>
+                      <label for="1repassword">Nhập lại mật Khẩu</label>
+                      <input type="password" formControlName="addrePassWord" id="1repassword" class="form-control">
+                      <div *ngIf="addstatus && f.addrePassWord.errors ">
+                        <div *ngIf="f.addrePassWord.errors.required" class="alert alert-danger" role="alert">Bạn chưa nhập mật khẩu</div>
+                        <div *ngIf="f.addrePassWord.errors.minlength" class="alert alert-danger" role="alert">Mật khẩu ít nhất 6 ký tự</div>
+                        <div *ngIf="!f.addrePassWord.errors.required && !f.addrePassWord.errors.minlength && f.addrePassWord.errors.ConfirmPassword" class="alert alert-danger" role="alert">Mật khẩu nhập lại không đúng</div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+                <button type="button" [attr.data-toggle]="!addAccount.invalid? 'modal': ''" [attr.data-target]="!addAccount.invalid? '#add-account-status': ''" (click)="createAccount()" class="btn btn-primary">Đồng ý</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Trang thai Them account -->
+<div class="modal fade" id="add-account-status" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div *ngIf="success" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Thêm tài khoản thành công</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+      <div *ngIf="fail" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Tài khoản đã tồn tại</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Trang thai Sua account -->
+<div class="modal fade" id="edit-account-status" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div *ngIf="successEdit" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Sửa tài khoản thành công</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+      <div *ngIf="failEdit" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Sửa tài khoản thất bại</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+</div>
